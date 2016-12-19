@@ -20,7 +20,7 @@
 (define (weight tree)
     (if (leaf? tree)
         (weight-leaf tree)
-        (caddr tree)))
+        (cadddr tree)))
 
 ;HuffmanTre的解码过程
 (define (decode bits tree)
@@ -35,6 +35,16 @@
                     (decode-1 (cdr bits) next-branch)))))
     (decode-1 bits tree))
 (define (choose-branch bit branch)
-    (cond ((= bit 0) (left-branch branch))
-          ((= bit 1) (right-branch branch))
+    (cond ((= bit '0) (left-branch branch))
+          ((= bit '1) (right-branch branch))
           (else (error "bad bit: CHOOSE-BRANCH" bit))))
+
+;测试样例
+(define sample-tree
+  (make-code-tree (make-leaf 'A 4)
+                  (make-code-tree
+                    (make-leaf 'B 2)
+                    (make-code-tree
+                      (make-leaf 'D 1)
+                      (make-leaf 'C 1)))))
+(define sample-message '(0 1 1 0 0 1 0 1 0 1 1 1 0))
